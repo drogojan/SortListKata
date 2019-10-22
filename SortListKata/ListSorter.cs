@@ -7,7 +7,7 @@ namespace SortListKata
     {
         public static IEnumerable<int> BubbleSort(List<int> list)
         {
-            if(list.Count < 2)
+            if (list.Count < 2)
                 return list;
 
             var sorted = false;
@@ -29,6 +29,36 @@ namespace SortListKata
             }
 
             return list;
+        }
+
+        internal static IEnumerable<int> QuickSort(List<int> list)
+        {
+
+            if (list.Count < 2)
+            {
+                return list;
+            }
+
+            var sorted = new List<int>();
+            int firstItem = list[0];
+
+            List<int> smallerItems = new List<int>();
+            List<int> greaterItems = new List<int>();
+
+            for (int i = 1; i < list.Count; i++)
+            {
+                int currentItem = list[i];
+                if (firstItem > currentItem)
+                    smallerItems.Add(currentItem);
+                else
+                    greaterItems.Add(currentItem);
+            }
+
+            sorted.InsertRange(0, QuickSort(smallerItems));
+            sorted.Add(firstItem);
+            sorted.AddRange(QuickSort(greaterItems));
+
+            return sorted;
         }
     }
 }
